@@ -1,20 +1,34 @@
 import os
+from contextlib import asynccontextmanager
 from pathlib import Path
 import httpx
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
+from sqlalchemy import text
 
+from .auth import get_current_user, router as auth_router
 from .data_provider import fetch_polygon_ohlcv, normalize_ticker, normalize_timeframe
+from .db import engine, init_db
 from .engine import calculate_levels
+from .models import User
 
-load_dotenv()
-app = FastAPI(title="NeuroTrader Institutional Levels", version="4.2.0")
+load_dotenv(override=True)
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    init_db()
+    yield
+
+app = FastAPI(title="NeuroTrader Institutional Levels", version="4.2.0", lifespan=lifespan)
 STATIC = Path(__file__).resolve().parent / "static"
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
+app.include_router(auth_router)
+
+WATCHLIST = ["SNDK", "NVDA", "META", "AVGO", "MSFT", "AAPL", "AMD", "TSLA", "QQQ", "SPY"]
 
 DEMO_PRICES = {
     "SNDK": 1596.0, "NVDA": 180.0, "META": 558.0, "AVGO": 340.0,
@@ -46,40 +60,73 @@ def _demo_ohlcv(symbol: str, timeframe: str, n: int = 500) -> pd.DataFrame:
 async def home():
     return FileResponse(STATIC / "index.html")
 
+def _polygon_configured() -> bool:
+    return bool(os.getenv("POLYGON_API_KEY", "").strip())
+
+
+def _demo_enabled() -> bool:
+    return os.getenv("DEMO_MODE", "false").lower() in {"1", "true", "yes", "on"}
+
+
 @app.get("/api/health")
 async def health():
-    live = bool(os.getenv("POLYGON_API_KEY", "").strip())
-    demo_enabled = os.getenv("DEMO_MODE", "true").lower() in {"1", "true", "yes", "on"}
+    live = _polygon_configured()
+    demo_enabled = _demo_enabled()
+    db_ok = False
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        db_ok = True
+    except Exception:
+        db_ok = False
     return {
         "ok": True,
         "version": "4.2.0",
-        "provider": "polygon" if live else "demo",
+        "provider": "polygon" if live else ("demo" if demo_enabled else "none"),
         "polygon_configured": live,
         "demo_mode": (not live and demo_enabled),
         "market_data_ready": live or demo_enabled,
+        "database": db_ok,
+        "tickers": WATCHLIST,
     }
+
+
+@app.get("/api/tickers")
+async def tickers():
+    return {"tickers": WATCHLIST}
 
 @app.get("/api/levels/{ticker}")
 async def levels(
     ticker: str,
     timeframe: str = Query("day"),
     limit: int = Query(500, ge=100, le=2000),
+    _user: User = Depends(get_current_user),
 ):
     try:
         symbol = normalize_ticker(ticker)
         tf = normalize_timeframe(timeframe)
-        live = bool(os.getenv("POLYGON_API_KEY", "").strip())
-        demo_enabled = os.getenv("DEMO_MODE", "true").lower() in {"1", "true", "yes", "on"}
+        live = _polygon_configured()
+        demo_enabled = _demo_enabled()
         if live:
             df = await fetch_polygon_ohlcv(symbol, timeframe=tf, limit=limit)
-            source = "Polygon Live"
+            source = "Polygon.io Live"
         elif demo_enabled:
             df = _demo_ohlcv(symbol, tf, limit)
             source = "Demo OHLCV"
         else:
-            raise RuntimeError("No market-data source configured. Add POLYGON_API_KEY or enable DEMO_MODE=true.")
+            raise RuntimeError(
+                "Configura POLYGON_API_KEY en .env para usar datos reales de Polygon.io."
+            )
 
         result = calculate_levels(df)
+        live_meta = dict(df.attrs.get("live") or {})
+        if live_meta.get("session_applied"):
+            if live_meta.get("quote_source"):
+                source = "Cotización en vivo + histórico Polygon"
+            else:
+                source = "Polygon.io sesión de hoy"
+        elif source.startswith("Polygon"):
+            source = "Polygon.io último día cerrado"
         result.update({
             "ticker": symbol,
             "timeframe": tf,
@@ -87,6 +134,11 @@ async def levels(
             "last_bar_time": df["timestamp"].iloc[-1].isoformat(),
             "engine_version": "4.2.0",
             "data_source": source,
+            "live": {
+                "session_date": live_meta.get("session_date"),
+                "session_applied": bool(live_meta.get("session_applied")),
+                "quote_source": live_meta.get("quote_source"),
+            },
         })
         return result
     except (ValueError, RuntimeError) as e:

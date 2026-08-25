@@ -3,8 +3,9 @@
 This build merges the strongest parts of the two versions:
 
 - **V3.1 QA:** real OHLCV backend, Polygon integration, validated ticker/timeframe input, institutional-level engine, automated tests.
-- **V4 Multi-Asset:** fast watchlist workflow and change-any-ticker interface.
-- **V4.2:** adds automatic demo fallback so the complete app works immediately even before a Polygon key is configured.
+- **V4 Multi-Asset:** selectable ticker combobox (SNDK, NVDA, META, AVGO, MSFT, AAPL, AMD, TSLA, QQQ, SPY).
+- **V4.2:** Polygon.io live OHLCV by default. Demo bars stay available only if `DEMO_MODE=true`.
+- **Auth:** register/login against Neon Postgres. Passwords are hashed; sessions use an HTTP-only cookie.
 
 ## Run
 
@@ -13,16 +14,22 @@ python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
+```
+
+Put your Polygon key and database URL in `.env`:
+
+```
+POLYGON_API_KEY=your_key_here
+DEMO_MODE=false
+DATABASE_URL=postgresql://USER:PASSWORD@HOST/neondb?sslmode=require
+JWT_SECRET=change-me
+```
+
+```bash
 uvicorn app.main:app --reload --port 8000
 ```
 
-Open `http://localhost:8000`.
-
-### Demo mode
-Leave `POLYGON_API_KEY` blank and `DEMO_MODE=true`. You can change among SNDK, NVDA, META, AVGO, MSFT, AAPL, AMD, TSLA, QQQ, SPY, or type another valid ticker.
-
-### Live mode
-Set `POLYGON_API_KEY=...`. The backend automatically prefers Polygon live/historical OHLCV and the API key never reaches the browser.
+Open `http://localhost:8000`, choose a ticker, then analyze. The API key never reaches the browser.
 
 ## QA
 

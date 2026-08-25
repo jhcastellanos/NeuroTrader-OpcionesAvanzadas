@@ -1,5 +1,6 @@
 import unittest
-from app.main import _demo_ohlcv
+from fastapi.testclient import TestClient
+from app.main import WATCHLIST, _demo_ohlcv, app
 from app.engine import calculate_levels
 
 class UnifiedDemoTests(unittest.TestCase):
@@ -16,6 +17,26 @@ class UnifiedDemoTests(unittest.TestCase):
             df = _demo_ohlcv("SNDK", tf, 300)
             self.assertEqual(len(df), 300)
             self.assertTrue(df["timestamp"].is_monotonic_increasing)
+
+
+class ApiSurfaceTests(unittest.TestCase):
+    def setUp(self):
+        self.client = TestClient(app)
+
+    def test_tickers_combobox_source(self):
+        r = self.client.get("/api/tickers")
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.json()["tickers"], WATCHLIST)
+
+    def test_home_has_ticker_combobox_without_default(self):
+        r = self.client.get("/")
+        html = r.text
+        self.assertIn('id="ticker"', html)
+        self.assertIn('list="tickerList"', html)
+        self.assertIn("Seleccionar o escribir ticker", html)
+        self.assertNotIn('value="SNDK"', html)
+        self.assertNotIn('id="watch"', html)
+
 
 if __name__ == "__main__":
     unittest.main()
