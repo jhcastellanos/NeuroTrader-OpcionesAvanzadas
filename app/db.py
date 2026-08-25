@@ -7,6 +7,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy.pool import NullPool
 
+engine = None
+SessionLocal = sessionmaker(autoflush=False, autocommit=False)
+
 
 class Base(DeclarativeBase):
     pass
@@ -23,20 +26,25 @@ def _database_url() -> str:
     return url
 
 
-engine = create_engine(
-    _database_url(),
-    poolclass=NullPool,
-    connect_args={"prepare_threshold": None},
-)
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+def get_engine():
+    global engine
+    if engine is None:
+        engine = create_engine(
+            _database_url(),
+            poolclass=NullPool,
+            connect_args={"prepare_threshold": None},
+        )
+        SessionLocal.configure(bind=engine)
+    return engine
 
 
 def init_db() -> None:
     from . import models  # noqa: F401
-    Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=get_engine())
 
 
 def get_db():
+    get_engine()
     db = SessionLocal()
     try:
         yield db

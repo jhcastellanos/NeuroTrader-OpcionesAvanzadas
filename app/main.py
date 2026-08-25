@@ -12,7 +12,7 @@ from sqlalchemy import text
 
 from .auth import get_current_user, router as auth_router
 from .data_provider import fetch_polygon_ohlcv, normalize_ticker, normalize_timeframe
-from .db import engine, init_db
+from .db import get_engine, init_db
 from .engine import calculate_levels
 from .models import User
 
@@ -20,12 +20,16 @@ load_dotenv(override=True)
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    init_db()
+    try:
+        init_db()
+    except Exception:
+        pass
     yield
 
 app = FastAPI(title="NeuroTrader Institutional Levels", version="4.2.0", lifespan=lifespan)
 STATIC = Path(__file__).resolve().parent / "static"
-app.mount("/static", StaticFiles(directory=STATIC), name="static")
+if STATIC.is_dir():
+    app.mount("/static", StaticFiles(directory=STATIC), name="static")
 app.include_router(auth_router)
 
 WATCHLIST = ["SNDK", "NVDA", "META", "AVGO", "MSFT", "AAPL", "AMD", "TSLA", "QQQ", "SPY"]
@@ -58,7 +62,10 @@ def _demo_ohlcv(symbol: str, timeframe: str, n: int = 500) -> pd.DataFrame:
 
 @app.get("/")
 async def home():
-    return FileResponse(STATIC / "index.html")
+    index = STATIC / "index.html"
+    if not index.is_file():
+        raise HTTPException(status_code=500, detail="Frontend bundle missing.")
+    return FileResponse(index)
 
 def _polygon_configured() -> bool:
     return bool(os.getenv("POLYGON_API_KEY", "").strip())
@@ -74,7 +81,7 @@ async def health():
     demo_enabled = _demo_enabled()
     db_ok = False
     try:
-        with engine.connect() as conn:
+        with get_engine().connect() as conn:
             conn.execute(text("SELECT 1"))
         db_ok = True
     except Exception:

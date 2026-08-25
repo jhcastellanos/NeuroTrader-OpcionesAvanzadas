@@ -54,6 +54,8 @@ def _cookie_secure() -> bool:
         return True
     if flag in {"0", "false", "no", "off"}:
         return False
+    if (os.getenv("VERCEL") or "").strip() == "1":
+        return True
     env = (os.getenv("RAILWAY_ENVIRONMENT") or "").strip().lower()
     return env in {"production", "prod"}
 
