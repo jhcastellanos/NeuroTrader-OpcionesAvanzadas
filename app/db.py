@@ -25,7 +25,24 @@ class DatabaseUnavailable(RuntimeError):
 
 
 def _database_url() -> str:
-    url = (os.getenv("DATABASE_URL") or "").strip()
+    url = ""
+    for name in (
+        "DATABASE_URL",
+        "POSTGRES_URL",
+        "POSTGRES_PRISMA_URL",
+        "DATABASE_URL_UNPOOLED",
+        "NEON_DATABASE_URL",
+    ):
+        url = (os.getenv(name) or "").strip()
+        if url:
+            break
+    if not url:
+        host = (os.getenv("PGHOST") or os.getenv("POSTGRES_HOST") or "").strip()
+        user = (os.getenv("PGUSER") or os.getenv("POSTGRES_USER") or "").strip()
+        password = (os.getenv("PGPASSWORD") or os.getenv("POSTGRES_PASSWORD") or "").strip()
+        database = (os.getenv("PGDATABASE") or os.getenv("POSTGRES_DATABASE") or os.getenv("POSTGRES_DB") or "").strip()
+        if host and user and database:
+            url = "postgresql://%s:%s@%s/%s" % (user, password, host, database)
     if not url:
         raise DatabaseUnavailable("DATABASE_URL is not configured.")
     if url.startswith("postgresql://"):
@@ -37,7 +54,7 @@ def _database_url() -> str:
     has_ssl = False
     for key, value in parse_qsl(parts.query, keep_blank_values=True):
         lowered = key.lower()
-        if lowered == "channel_binding":
+        if lowered in {"channel_binding", "pgbouncer"}:
             continue
         if lowered == "sslmode":
             has_ssl = True
@@ -54,7 +71,7 @@ def get_engine():
             engine = create_engine(
                 _database_url(),
                 poolclass=NullPool,
-                connect_args={"prepare_threshold": None, "connect_timeout": 10},
+                connect_args={"prepare_threshold": None},
             )
         except Exception as exc:
             logger.exception("Could not create database engine")
@@ -63,8 +80,11 @@ def get_engine():
         try:
             from . import models  # noqa: F401
             Base.metadata.create_all(bind=engine)
-        except Exception:
+        except Exception as exc:
             logger.exception("Could not initialize database tables")
+            engine = None
+            SessionLocal.configure(bind=None)
+            raise DatabaseUnavailable(str(exc) or "database init failed") from exc
     return engine
 
 

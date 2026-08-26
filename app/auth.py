@@ -163,3 +163,20 @@ def logout(response: Response):
 @router.get("/me", response_model=UserOut)
 def me(user: User = Depends(get_current_user)):
     return user
+
+
+@router.get("/health")
+def auth_health():
+    db_names = (
+        "DATABASE_URL",
+        "POSTGRES_URL",
+        "POSTGRES_PRISMA_URL",
+        "DATABASE_URL_UNPOOLED",
+        "NEON_DATABASE_URL",
+        "PGHOST",
+        "POSTGRES_HOST",
+    )
+    return {
+        "database_configured": any(bool((os.getenv(name) or "").strip()) for name in db_names),
+        "jwt_configured": bool((os.getenv("JWT_SECRET") or "").strip()),
+    }

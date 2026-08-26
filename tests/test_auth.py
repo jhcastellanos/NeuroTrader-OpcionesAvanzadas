@@ -72,6 +72,15 @@ class DatabaseUrlTests(unittest.TestCase):
         self.assertNotIn("channel_binding", normalized)
         self.assertIn("sslmode=require", normalized)
 
+    def test_postgres_url_alias_is_accepted(self):
+        from unittest.mock import patch
+        from app.db import _database_url
+        raw = "postgres://u:p@host/db?sslmode=require"
+        env = {"DATABASE_URL": "", "POSTGRES_URL": raw}
+        with patch.dict("os.environ", env, clear=False):
+            normalized = _database_url()
+        self.assertTrue(normalized.startswith("postgresql+psycopg://"))
+
 
 if __name__ == "__main__":
     unittest.main()
