@@ -5,10 +5,6 @@
     "main.py": {
       "maxDuration": 60,
       "includeFiles": "app/static/**"
-    },
-    "app/main.py": {
-      "maxDuration": 60,
-      "includeFiles": "app/static/**"
     }
   }
 }

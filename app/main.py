@@ -1,6 +1,7 @@
 import os
 from contextlib import asynccontextmanager
 from pathlib import Path
+import logging
 import httpx
 import numpy as np
 import pandas as pd
@@ -14,16 +15,19 @@ from .auth import get_current_user, router as auth_router
 from .data_provider import fetch_polygon_ohlcv, normalize_ticker, normalize_timeframe
 from .db import get_engine, init_db
 from .engine import calculate_levels
+from .income.options_routes import router as options_router
+from .income.routes import router as income_router
 from .models import User
 
 load_dotenv(override=True)
+logger = logging.getLogger("neurotrader")
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     try:
         init_db()
     except Exception:
-        pass
+        logger.exception("Database init failed at startup")
     yield
 
 app = FastAPI(title="NeuroTrader Institutional Levels", version="4.2.0", lifespan=lifespan)
@@ -31,6 +35,8 @@ STATIC = Path(__file__).resolve().parent / "static"
 if STATIC.is_dir():
     app.mount("/static", StaticFiles(directory=STATIC), name="static")
 app.include_router(auth_router)
+app.include_router(income_router)
+app.include_router(options_router)
 
 WATCHLIST = ["SNDK", "NVDA", "META", "AVGO", "MSFT", "AAPL", "AMD", "TSLA", "QQQ", "SPY"]
 

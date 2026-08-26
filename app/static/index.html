@@ -1,6 +1,7 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07111f"><title>NeuroTrader Institutional Levels V4.2</title>
 <style>
-:root{--bg:#07111f;--panel:#0d1828;--panel2:#101f33;--border:#26364a;--text:#f8fafc;--muted:#94a3b8;--gold:#d4af37;--green:#22c55e;--red:#ef4444}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.app{max-width:1320px;margin:auto;padding:18px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800}h1{margin:6px 0 4px;font-size:clamp(28px,6vw,42px)}.sub{color:var(--muted);font-size:14px}.controls{display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:8px;align-items:end;margin-top:14px}label{display:grid;gap:5px;color:var(--muted);font-size:11px;font-weight:800}input,select,button{min-height:44px;border-radius:12px;font-size:16px}input,select{width:100%;padding:8px 10px;border:1px solid var(--border);background:var(--panel);color:var(--text)}button{border:0;padding:8px 14px;background:var(--gold);color:#07111f;font-weight:900;cursor:pointer}.watch{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 10px}.watch button{min-height:36px;padding:6px 10px;background:var(--panel);color:#cbd5e1;border:1px solid var(--border);font-size:12px}.watch button.active{color:var(--gold);border-color:#8b732a;background:rgba(212,175,55,.08)}.status{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px}.pill{padding:7px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--border);font-size:11px;font-weight:800}.gold{color:var(--gold)}.green{color:#4ade80}.red{color:#f87171}.err{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#fecaca;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.kpi,.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px}.kpi{padding:12px}.kpi span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;margin-bottom:5px}.kpi strong{font-size:17px}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.75fr);gap:14px;margin-top:14px}.panel{padding:14px}.head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.head h3{margin:0;font-size:15px}.chart{min-height:390px;background:#091524;border:1px solid #1b2b40;border-radius:14px;overflow:hidden}.chart svg{display:block;width:100%;height:auto;min-height:390px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}.metric{padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.metric span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-bottom:4px}.metric strong{font-size:14px}.buy{margin-top:10px;padding:12px;border-radius:13px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25)}.buy b{color:#4ade80}.buy p{margin:5px 0 0;color:#cbd5e1;font-size:12px;line-height:1.45}.levels{display:grid;gap:8px}.level{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.n{font-weight:900}.range{font-weight:900;font-size:14px}.meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.35}.score{font-size:16px;font-weight:900}.meter{height:5px;background:#1c2a3d;border-radius:999px;overflow:hidden;margin-top:6px}.meter i{display:block;height:100%;background:var(--gold)}.ghost{background:transparent;color:var(--text);border:1px solid var(--border)!important;min-height:36px;padding:6px 12px;font-size:12px;font-weight:800}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.topbar .user{color:var(--muted);font-size:13px;font-weight:700}#workspace{display:none}#workspace.show{display:block}#gate{display:none;min-height:72vh;align-items:center;justify-content:center}#gate.show{display:flex}.auth{width:min(420px,100%);background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:14px 0}.tabs button{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}.tabs button.active{background:rgba(212,175,55,.12);color:var(--gold);border-color:#8b732a}.auth form{display:grid;gap:10px}.ok{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#bbf7d0;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)}@media(max-width:950px){.controls{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.app{padding:12px}.controls{grid-template-columns:1fr 1fr}.controls button{grid-column:1/-1}.kpis{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}.chart,.chart svg{min-height:330px}}
+:root{--bg:#07111f;--panel:#0d1828;--panel2:#101f33;--border:#26364a;--text:#f8fafc;--muted:#94a3b8;--gold:#d4af37;--green:#22c55e;--red:#ef4444}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.app{max-width:1320px;margin:auto;padding:18px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800}h1{margin:6px 0 4px;font-size:clamp(28px,6vw,42px)}.sub{color:var(--muted);font-size:14px}.controls{display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:8px;align-items:end;margin-top:14px}label{display:grid;gap:5px;color:var(--muted);font-size:11px;font-weight:800}input,select,button{min-height:44px;border-radius:12px;font-size:16px}input,select{width:100%;padding:8px 10px;border:1px solid var(--border);background:var(--panel);color:var(--text)}button{border:0;padding:8px 14px;background:var(--gold);color:#07111f;font-weight:900;cursor:pointer}.watch{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 10px}.watch button{min-height:36px;padding:6px 10px;background:var(--panel);color:#cbd5e1;border:1px solid var(--border);font-size:12px}.watch button.active{color:var(--gold);border-color:#8b732a;background:rgba(212,175,55,.08)}.status{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px}.pill{padding:7px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--border);font-size:11px;font-weight:800}.gold{color:var(--gold)}.green{color:#4ade80}.red{color:#f87171}.err{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#fecaca;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.kpi,.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px}.kpi{padding:12px}.kpi span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;margin-bottom:5px}.kpi strong{font-size:17px}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.75fr);gap:14px;margin-top:14px}.panel{padding:14px}.head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.head h3{margin:0;font-size:15px}.chart{min-height:390px;background:#091524;border:1px solid #1b2b40;border-radius:14px;overflow:hidden}.chart svg{display:block;width:100%;height:auto;min-height:390px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}.metric{padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.metric span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-bottom:4px}.metric strong{font-size:14px}.buy{margin-top:10px;padding:12px;border-radius:13px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25)}.buy b{color:#4ade80}.buy p{margin:5px 0 0;color:#cbd5e1;font-size:12px;line-height:1.45}.levels{display:grid;gap:8px}.level{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.n{font-weight:900}.range{font-weight:900;font-size:14px}.meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.35}.score{font-size:16px;font-weight:900}.meter{height:5px;background:#1c2a3d;border-radius:999px;overflow:hidden;margin-top:6px}.meter i{display:block;height:100%;background:var(--gold)}.ghost{background:transparent;color:var(--text);border:1px solid var(--border)!important;min-height:36px;padding:6px 12px;font-size:12px;font-weight:800}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.topbar .user{color:var(--muted);font-size:13px;font-weight:700}#workspace{display:none}#workspace.show{display:block}#gate{display:none;min-height:72vh;align-items:center;justify-content:center}#gate.show{display:flex}.auth{width:min(420px,100%);background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:14px 0}.tabs button{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}.tabs button.active{background:rgba(212,175,55,.12);color:var(--gold);border-color:#8b732a}.auth form{display:grid;gap:10px}.ok{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#bbf7d0;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)}.dash-tabs{display:flex;gap:8px;margin:14px 0 4px}.dash-tabs button{min-height:38px;padding:8px 14px;background:var(--panel);color:var(--muted);border:1px solid var(--border);font-size:13px}.dash-tabs button.active{color:var(--gold);border-color:#8b732a;background:rgba(212,175,55,.12)}#incomeView{display:none}#incomeView.show{display:block}#levelsView.hide{display:none}.income-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.contracts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.contract{padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.contract.best{border-color:#8b732a;background:rgba(212,175,55,.08)}.contract b{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}.note{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.45}.reasons{margin:8px 0 0;padding-left:18px;color:#cbd5e1;font-size:12px;line-height:1.45}@media(max-width:950px){.controls{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.app{padding:12px}.controls{grid-template-columns:1fr 1fr}.controls button{grid-column:1/-1}.kpis{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}.chart,.chart svg{min-height:330px}}
+#incomeView .eyebrow{color:var(--gold)}.income-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.income-stack{display:grid;gap:12px;margin-top:12px}.quote-price{display:flex;align-items:baseline;gap:12px;margin:8px 0 14px}.quote-price strong{font-size:32px}.quote-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;border-top:1px solid var(--border);padding-top:12px;margin-top:8px}.quote-metrics div span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;margin-bottom:4px}.scorebar{margin:8px 0}.scorebar .row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.score-head{display:flex;align-items:center;gap:8px}.score-head strong{font-size:28px;color:var(--gold)}.income-filters{display:none;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}.income-filters select{min-height:36px;width:auto;font-size:12px}.income-table-wrap{max-height:320px;overflow:auto}.income-table-wrap.is-loading{opacity:.45}.income{width:100%;border-collapse:collapse;font-size:12px}.income th{text-align:left;color:var(--muted);font-weight:700;font-size:10px;text-transform:uppercase;padding:6px 8px;position:sticky;top:0;background:var(--panel)}.income td{padding:7px 8px;border-top:1px solid var(--border);white-space:nowrap}.income tr.sel{background:rgba(212,175,55,.08)}.income input[type=checkbox],.checkline input[type=checkbox]{width:16px;min-height:16px;height:16px}.strat-toggle{display:flex;gap:8px;margin-bottom:12px}.strat-toggle button{min-height:36px;background:var(--panel2);color:var(--muted);border:1px solid var(--border);font-size:12px}.strat-toggle button.active{background:var(--gold);color:#07111f}.field-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.checkline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;min-height:44px}.checkline input{width:auto}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.split-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.payoff svg{display:block;width:100%;height:220px;background:#091524;border:1px solid #1b2b40;border-radius:12px}.metric-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}.metric-row strong{color:var(--text)}.strat-result{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}.details-link{cursor:pointer;color:var(--gold);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-top:10px}@media(max-width:950px){.income-top,.field-grid,.role-grid,.split-2{grid-template-columns:1fr}.quote-metrics{grid-template-columns:repeat(2,1fr)}}
 </style></head><body>
 <div id="gate">
   <div class="auth">
@@ -26,12 +27,117 @@
 </div>
 <div class="app" id="workspace">
 <div class="topbar"><div><div class="eyebrow">NeuroTrader • Institutional Engine</div></div><div style="display:flex;align-items:center;gap:10px"><span class="user" id="userEmail"></span><button type="button" class="ghost" id="logoutBtn">Salir</button></div></div>
-<div id="app"><h1>Institutional Levels™ V4.2</h1><div class="sub">Motor V3.1 QA + interfaz Multi-Asset. Histórico Polygon.io y cotización en vivo para cualquier ticker.</div>
+<div id="app"><h1>Institutional Levels™ V4.2</h1><div class="sub">Motor V3.1 QA + Premium Income. Histórico Polygon.io, cotización en vivo y análisis de Covered Call / CSP para cualquier ticker.</div>
 <form class="controls" id="form"><label>Ticker<input id="ticker" list="tickerList" placeholder="Seleccionar o escribir ticker" maxlength="15" autocomplete="off"><datalist id="tickerList"></datalist></label><label>Timeframe<select id="tf"><option value="day">Daily</option><option value="week">Weekly</option><option value="4h">4H</option><option value="1h">1H</option></select></label><label>Barras<select id="limit"><option>300</option><option selected>500</option><option>800</option><option>1200</option></select></label><button type="submit">Analizar</button></form>
 <div class="status"><span class="pill gold" id="source">● Cargando</span><span class="pill" id="last">—</span><span class="pill" id="bars">—</span><span class="pill green" id="breakout">Breakout Validation</span></div><div class="err" id="err"></div>
+<div class="dash-tabs"><button type="button" id="tabLevels" class="active">Niveles institucionales</button><button type="button" id="tabIncome">Premium Income</button></div>
+<div id="levelsView">
 <div class="kpis"><div class="kpi"><span>Precio</span><strong id="price">—</strong></div><div class="kpi"><span>Bias</span><strong id="bias">—</strong></div><div class="kpi"><span>S1</span><strong id="s1">—</strong></div><div class="kpi"><span>R1</span><strong id="r1">—</strong></div><div class="kpi"><span>ATR 14</span><strong id="atr">—</strong></div><div class="kpi"><span>Estado</span><strong id="state">—</strong></div></div>
-<div class="layout"><section class="panel"><div class="head"><h3 id="chartTitle">Mapa institucional</h3><span class="pill gold" id="best">Confluence</span></div><div class="chart"><svg id="chart" viewBox="0 0 900 450" preserveAspectRatio="none"></svg></div><div class="metrics"><div class="metric"><span>SMA 20</span><strong id="sma20">—</strong></div><div class="metric"><span>SMA 50</span><strong id="sma50">—</strong></div><div class="metric"><span>SMA 100</span><strong id="sma100">—</strong></div><div class="metric"><span>SMA 200</span><strong id="sma200">—</strong></div><div class="metric"><span>VWAP</span><strong id="vwap">—</strong></div><div class="metric"><span>Anchored VWAP</span><strong id="avwap">—</strong></div><div class="metric"><span>Volume POC</span><strong id="poc">—</strong></div><div class="metric"><span>Fib 61.8%</span><strong id="fib">—</strong></div></div><div class="buy"><b>Institutional Buy Zone</b><p id="buy">—</p></div></section><aside class="panel"><div class="head"><h3>Niveles clave</h3><span class="pill gold">Score 0–100</span></div><div class="levels" id="levels"></div></aside></div></div>
+<div class="layout"><section class="panel"><div class="head"><h3 id="chartTitle">Mapa institucional</h3><span class="pill gold" id="best">Confluence</span></div><div class="chart"><svg id="chart" viewBox="0 0 900 450" preserveAspectRatio="none"></svg></div><div class="metrics"><div class="metric"><span>SMA 20</span><strong id="sma20">—</strong></div><div class="metric"><span>SMA 50</span><strong id="sma50">—</strong></div><div class="metric"><span>SMA 100</span><strong id="sma100">—</strong></div><div class="metric"><span>SMA 200</span><strong id="sma200">—</strong></div><div class="metric"><span>VWAP</span><strong id="vwap">—</strong></div><div class="metric"><span>Anchored VWAP</span><strong id="avwap">—</strong></div><div class="metric"><span>Volume POC</span><strong id="poc">—</strong></div><div class="metric"><span>Fib 61.8%</span><strong id="fib">—</strong></div></div><div class="buy"><b>Institutional Buy Zone</b><p id="buy">—</p></div></section><aside class="panel"><div class="head"><h3>Niveles clave</h3><span class="pill gold">Score 0–100</span></div><div class="levels" id="levels"></div></aside></div>
 </div>
+<div id="incomeView">
+  <div class="note" id="incomeNote">Analiza un ticker para abrir el dashboard de Premium Income (Covered Call y Cash-Secured Put).</div>
+  <div class="income-top">
+    <section class="panel">
+      <p class="eyebrow" id="quoteSession">Cotización</p>
+      <div class="head"><h2 id="quoteTicker" style="margin:0;font-size:28px">Sin datos aún</h2><span class="pill" id="quoteBadge">—</span></div>
+      <div class="quote-price"><strong id="quotePrice">—</strong><span id="quoteChange">—</span></div>
+      <dl class="quote-metrics" id="quoteMetrics"></dl>
+      <p class="note" id="quoteUpdated">Busca un ticker para ver cotización, tendencia y estado de mercado.</p>
+    </section>
+    <section class="panel">
+      <div class="head">
+        <div><p class="eyebrow">Análisis técnico</p><h3>Underlying Score</h3></div>
+        <div class="score-head"><span class="pill" id="scoreRegime">—</span><strong id="scoreTotal">—</strong></div>
+      </div>
+      <div id="scoreBars"></div>
+      <dl class="quote-metrics" id="scoreMetrics"></dl>
+      <div class="note" id="scoreLevels"></div>
+      <details id="scoreDetails" style="display:none;margin-top:10px">
+        <summary class="details-link" id="scoreSummaryLabel">Ver explicación completa del score</summary>
+        <ul class="reasons" id="scoreReasons"></ul>
+      </details>
+    </section>
+  </div>
+  <div class="income-stack">
+    <section class="panel">
+      <div class="head"><div><p class="eyebrow" id="chainEyebrow">Tabla de contratos</p><h3 id="chainTitle">Sin datos aún</h3></div><span class="pill gold" id="chainBadge"></span></div>
+      <div class="income-filters" id="chainFilters">
+        <select id="chainExp"></select>
+        <select id="chainType"><option value="all">Calls y Puts</option><option value="call">Solo Calls</option><option value="put">Solo Puts</option></select>
+        <select id="chainSort"><option value="strike">Ordenar: Strike</option><option value="dte">Ordenar: DTE</option><option value="delta">Ordenar: |Delta|</option><option value="iv">Ordenar: IV</option><option value="oi">Ordenar: Open interest</option><option value="spread">Ordenar: Spread %</option></select>
+        <span class="note" style="margin:0">Selecciona hasta 3 para comparar</span>
+      </div>
+      <div id="chainTable"><p class="note">Busca un ticker para ver todos los contratos disponibles por vencimiento.</p></div>
+    </section>
+    <section class="panel">
+      <p class="eyebrow">Comparador</p>
+      <h3 id="comparadorTitle">Sin contratos seleccionados</h3>
+      <div id="comparadorBody"><p class="note">Selecciona hasta 3 contratos en la tabla (checkbox) para compararlos lado a lado.</p></div>
+    </section>
+    <section class="panel">
+      <p class="eyebrow">Motor de estrategia</p>
+      <h3 id="strategyTitle">Evaluar estrategia</h3>
+      <div class="strat-toggle"><button type="button" id="btnTabCc" class="active">Covered Call</button><button type="button" id="btnTabCsp">Cash-Secured Put</button></div>
+      <div id="ccForm">
+        <form id="ccFormEl">
+          <div class="field-grid">
+            <label>Acciones que posees<input id="ccShares" type="number" min="0" value="100"></label>
+            <label>Costo promedio ($)<input id="ccCost" type="number" step="0.01" min="0" value="0"></label>
+            <label>Perfil de riesgo<select id="ccRisk"><option value="conservador">Conservador</option><option value="equilibrado" selected>Equilibrado</option><option value="agresivo">Agresivo</option></select></label>
+            <label>Rend. mínimo (%)<input id="ccYield" type="number" step="0.1" min="0" value="1.0"></label>
+            <label>Contratos máximos<input id="ccMax" type="number" min="1" value="1"></label>
+            <label class="checkline"><input id="ccEarnings" type="checkbox"> Acepto earnings antes del vencimiento</label>
+          </div>
+          <div style="margin-top:10px"><button type="submit" id="ccSubmit">Evaluar Covered Call</button></div>
+        </form>
+        <p class="err" id="ccErr"></p>
+        <div id="ccResult"></div>
+      </div>
+      <div id="cspForm" style="display:none">
+        <form id="cspFormEl">
+          <div class="field-grid">
+            <label>Capital disponible ($)<input id="cspCapital" type="number" step="0.01" min="0" value="10000"></label>
+            <label>Perfil de riesgo<select id="cspRisk"><option value="conservador">Conservador</option><option value="equilibrado" selected>Equilibrado</option><option value="agresivo">Agresivo</option></select></label>
+            <label>Rend. mínimo (%)<input id="cspYield" type="number" step="0.1" min="0" value="1.0"></label>
+            <label>Contratos máximos<input id="cspMax" type="number" min="1" value="1"></label>
+            <label class="checkline"><input id="cspWilling" type="checkbox" checked> Deseo comprar 100 acciones por contrato</label>
+            <label class="checkline"><input id="cspEarnings" type="checkbox"> Acepto earnings antes del vencimiento</label>
+          </div>
+          <div style="margin-top:10px"><button type="submit" id="cspSubmit">Evaluar Cash-Secured Put</button></div>
+        </form>
+        <p class="err" id="cspErr"></p>
+        <div id="cspResult"></div>
+      </div>
+    </section>
+    <section class="panel">
+      <p class="eyebrow">Motor de estrategia</p>
+      <h3 id="compareTitle">Comparar Covered Call vs. CSP</h3>
+      <p class="note">Da datos de una o ambas estrategias. El motor evalúa las que puede y la IA compara los resultados — la recomendación sale del Option Opportunity Score, no de la IA.</p>
+      <form id="cmpForm">
+        <div class="field-grid">
+          <label>Perfil de riesgo<select id="cmpRisk"><option value="conservador">Conservador</option><option value="equilibrado" selected>Equilibrado</option><option value="agresivo">Agresivo</option></select></label>
+          <label>Rend. mínimo (%)<input id="cmpYield" type="number" step="0.1" value="1.0"></label>
+          <label>Acciones que posees (CC)<input id="cmpShares" type="number" placeholder="Opcional"></label>
+          <label>Costo promedio ($) (CC)<input id="cmpCost" type="number" step="0.01" placeholder="Opcional"></label>
+          <label>Capital disponible ($) (CSP)<input id="cmpCapital" type="number" step="100" placeholder="Opcional"></label>
+        </div>
+        <div style="margin-top:10px"><button type="submit" id="cmpSubmit">Comparar con IA</button></div>
+      </form>
+      <p class="err" id="cmpErr"></p>
+      <div id="compareResult"></div>
+    </section>
+    <section class="panel">
+      <p class="eyebrow">Vista de riesgo</p>
+      <h3 id="riskTitle">Sin datos aún</h3>
+      <div id="riskBody"><p class="note">Evalúa una estrategia arriba para ver el payoff al vencimiento.</p></div>
+    </section>
+  </div>
+  <p class="note" id="incomeDisclaimer"></p>
+</div>
+</div>
+</div>
+<script src="/static/premium.js"></script>
 <script>
 (function(){
 var FALLBACK_WATCH=['SNDK','NVDA','META','AVGO','MSFT','AAPL','AMD','TSLA','QQQ','SPY'];
@@ -94,6 +200,7 @@ async function load(){
     var r=await fetch(url,{credentials:'same-origin'}), d=await r.json();
     if(r.status===401){ showGate(); throw new Error('Sesión expirada. Inicia sesión de nuevo.'); }
     if(!r.ok) throw new Error(typeof d.detail==='string'?d.detail:'Analysis failed');
+    lastTicker=d.ticker;
     $('source').textContent='● '+d.data_source;
     if(d.live&&d.live.session_applied){
       $('last').textContent='Cotización: '+new Date(d.last_bar_time).toLocaleString();
@@ -128,6 +235,9 @@ async function load(){
     for(var i=0;i<d.supports.length;i++) lv.appendChild(card('S'+(i+1),d.supports[i]));
     for(var j=0;j<d.resistances.length;j++) lv.appendChild(card('R'+(j+1),d.resistances[j]));
     draw(d);
+    lastTicker=d.ticker;
+    if(window.NTPremium) NTPremium.reset();
+    if($('tabIncome').classList.contains('active') && window.NTPremium) NTPremium.load(lastTicker, true);
   }catch(e){
     err.textContent=e.message;
     err.style.display='block';
@@ -136,6 +246,17 @@ async function load(){
   }
 }
 fillTickerSelect(FALLBACK_WATCH);
+var lastTicker='';
+function setDashTab(name){
+  var levels=name==='levels';
+  $('tabLevels').className=levels?'active':'';
+  $('tabIncome').className=levels?'':'active';
+  $('levelsView').classList.toggle('hide', !levels);
+  $('incomeView').classList.toggle('show', !levels);
+  if(!levels && lastTicker && window.NTPremium) NTPremium.load(lastTicker);
+}
+$('tabLevels').addEventListener('click',function(){ setDashTab('levels'); });
+$('tabIncome').addEventListener('click',function(){ setDashTab('income'); });
 $('form').addEventListener('submit',function(e){e.preventDefault();load()});
 $('ticker').addEventListener('change',function(){ if(selectedTicker()) load(); });
 $('tf').addEventListener('change',function(){ if(selectedTicker()) load(); });
@@ -150,6 +271,7 @@ function showGate(){
   $('gate').classList.add('show');
   $('workspace').classList.remove('show');
 }
+window.addEventListener('nt-session-expired', function(){ showGate(); });
 function showApp(user){
   $('gate').classList.remove('show');
   $('workspace').classList.add('show');

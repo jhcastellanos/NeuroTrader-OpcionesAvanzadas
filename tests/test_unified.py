@@ -34,6 +34,12 @@ class ApiSurfaceTests(unittest.TestCase):
         self.assertIn('id="ticker"', html)
         self.assertIn('list="tickerList"', html)
         self.assertIn("Seleccionar o escribir ticker", html)
+        self.assertIn("Premium Income", html)
+        self.assertIn('id="tabIncome"', html)
+        self.assertIn("Evaluar Covered Call", html)
+        self.assertIn("Underlying Score", html)
+        self.assertIn("Comparar con IA", html)
+        self.assertIn("/static/premium.js", html)
         self.assertNotIn('value="SNDK"', html)
         self.assertNotIn('id="watch"', html)
 

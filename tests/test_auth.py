@@ -61,5 +61,17 @@ class AuthFlowTests(unittest.TestCase):
         self.assertIn("Seleccionar o escribir ticker", html)
 
 
+class DatabaseUrlTests(unittest.TestCase):
+    def test_database_url_strips_channel_binding(self):
+        from unittest.mock import patch
+        from app.db import _database_url
+        raw = "postgresql://u:p@host/db?sslmode=require&channel_binding=require"
+        with patch.dict("os.environ", {"DATABASE_URL": raw}, clear=False):
+            normalized = _database_url()
+        self.assertIn("postgresql+psycopg://", normalized)
+        self.assertNotIn("channel_binding", normalized)
+        self.assertIn("sslmode=require", normalized)
+
+
 if __name__ == "__main__":
     unittest.main()

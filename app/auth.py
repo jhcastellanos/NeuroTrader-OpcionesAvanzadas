@@ -8,7 +8,7 @@ import jwt
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import APIKeyCookie
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from .db import get_db
@@ -23,7 +23,10 @@ cookie_scheme = APIKeyCookie(name=COOKIE_NAME, auto_error=False)
 def _jwt_secret() -> str:
     secret = (os.getenv("JWT_SECRET") or "").strip()
     if not secret:
-        raise RuntimeError("JWT_SECRET is not configured.")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Autenticación no configurada.",
+        )
     return secret
 
 
@@ -125,6 +128,12 @@ def register(body: AuthIn, response: Response, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ese email ya está registrado.")
+    except SQLAlchemyError as exc:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="No fue posible conectar con la base de datos.",
+        ) from exc
     db.refresh(user)
     set_session(response, create_token(user.id, user.email))
     return user
@@ -132,7 +141,13 @@ def register(body: AuthIn, response: Response, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=UserOut)
 def login(body: AuthIn, response: Response, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == body.email).one_or_none()
+    try:
+        user = db.query(User).filter(User.email == body.email).one_or_none()
+    except SQLAlchemyError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="No fue posible conectar con la base de datos.",
+        ) from exc
     if user is None or not verify_password(body.password, user.password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Email o contraseña incorrectos.")
     set_session(response, create_token(user.id, user.email))
