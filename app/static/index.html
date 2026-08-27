@@ -13,6 +13,7 @@
       <button type="button" id="tabRegister">Register</button>
     </div>
     <div class="err" id="authErr"></div>
+    <p class="note" id="authStatus" style="margin:0 0 10px"></p>
     <form id="loginForm">
       <label>Email<input id="loginEmail" type="email" autocomplete="username" required></label>
       <label>Contraseña<input id="loginPassword" type="password" autocomplete="current-password" minlength="8" required></label>
@@ -288,8 +289,32 @@ function setAuthMode(mode){
 }
 async function currentUser(){
   var r=await fetch('/api/auth/me',{credentials:'same-origin'});
+  if(r.status===503){
+    var d=await r.json().catch(function(){return {};});
+    $('authErr').textContent=authDetail(d);
+    $('authErr').style.display='block';
+    return null;
+  }
   if(!r.ok) return null;
   return r.json();
+}
+function loadAuthHealth(){
+  fetch('/api/auth/health').then(function(r){ return r.json(); }).then(function(h){
+    var status=$('authStatus');
+    if(!h.jwt_configured){
+      $('authErr').textContent='Autenticación no configurada.';
+      $('authErr').style.display='block';
+      if(status) status.textContent='Falta JWT_SECRET en el servidor.';
+      return;
+    }
+    if(!h.database_configured || h.database_connected===false){
+      $('authErr').textContent='No fue posible conectar con la base de datos.';
+      $('authErr').style.display='block';
+      if(status) status.textContent='La base de datos no responde.';
+      return;
+    }
+    if(status) status.textContent='';
+  }).catch(function(){});
 }
 async function submitAuth(url,email,password){
   $('authErr').style.display='none';
@@ -321,6 +346,6 @@ $('logoutBtn').addEventListener('click',async function(){
   await fetch('/api/auth/logout',{method:'POST',credentials:'same-origin'});
   showGate();
 });
-currentUser().then(function(user){ if(user) showApp(user); else showGate(); }).catch(function(){ showGate(); });
+currentUser().then(function(user){ if(user) showApp(user); else { showGate(); loadAuthHealth(); } }).catch(function(){ showGate(); loadAuthHealth(); });
 })();
 </script></body></html>

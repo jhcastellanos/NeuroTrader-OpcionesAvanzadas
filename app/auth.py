@@ -121,6 +121,7 @@ def get_current_user(
 
 @router.post("/register", response_model=UserOut)
 def register(body: AuthIn, response: Response, db: Session = Depends(get_db)):
+    _jwt_secret()
     user = User(email=body.email, password_hash=hash_password(body.password))
     db.add(user)
     try:
@@ -141,6 +142,7 @@ def register(body: AuthIn, response: Response, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=UserOut)
 def login(body: AuthIn, response: Response, db: Session = Depends(get_db)):
+    _jwt_secret()
     try:
         user = db.query(User).filter(User.email == body.email).one_or_none()
     except SQLAlchemyError as exc:
@@ -167,6 +169,10 @@ def me(user: User = Depends(get_current_user)):
 
 @router.get("/health")
 def auth_health():
+    from sqlalchemy import text
+
+    from .db import get_engine
+
     db_names = (
         "DATABASE_URL",
         "POSTGRES_URL",
@@ -176,7 +182,17 @@ def auth_health():
         "PGHOST",
         "POSTGRES_HOST",
     )
+    configured = any(bool((os.getenv(name) or "").strip()) for name in db_names)
+    connected = False
+    if configured:
+        try:
+            with get_engine().connect() as conn:
+                conn.execute(text("SELECT 1"))
+            connected = True
+        except Exception:
+            connected = False
     return {
-        "database_configured": any(bool((os.getenv(name) or "").strip()) for name in db_names),
+        "database_configured": configured,
+        "database_connected": connected,
         "jwt_configured": bool((os.getenv("JWT_SECRET") or "").strip()),
     }

@@ -1,10 +1,11 @@
 import logging
 import os
+import time
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from dotenv import load_dotenv
 from fastapi import HTTPException, status
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy.pool import NullPool
 
@@ -66,31 +67,41 @@ def _database_url() -> str:
 
 def get_engine():
     global engine
-    if engine is None:
+    if engine is not None:
+        return engine
+    last_error = None
+    for attempt in range(1, 4):
+        bind = None
         try:
-            engine = create_engine(
+            bind = create_engine(
                 _database_url(),
                 poolclass=NullPool,
-                connect_args={"prepare_threshold": None},
+                connect_args={"prepare_threshold": None, "connect_timeout": 15},
             )
-        except Exception as exc:
-            logger.exception("Could not create database engine")
-            raise DatabaseUnavailable(str(exc) or "database engine failed") from exc
-        SessionLocal.configure(bind=engine)
-        try:
+            SessionLocal.configure(bind=bind)
             from . import models  # noqa: F401
-            Base.metadata.create_all(bind=engine)
+            Base.metadata.create_all(bind=bind)
+            with bind.connect() as conn:
+                conn.execute(text("SELECT 1"))
+            engine = bind
+            return engine
         except Exception as exc:
-            logger.exception("Could not initialize database tables")
-            engine = None
+            last_error = exc
+            logger.exception("Database init failed (attempt %s/3)", attempt)
+            if bind is not None:
+                bind.dispose()
             SessionLocal.configure(bind=None)
-            raise DatabaseUnavailable(str(exc) or "database init failed") from exc
-    return engine
+            time.sleep(0.6 * attempt)
+    engine = None
+    raise DatabaseUnavailable(str(last_error) or "database init failed") from last_error
 
 
 def reset_engine():
     global engine
+    if engine is not None:
+        engine.dispose()
     engine = None
+    SessionLocal.configure(bind=None)
 
 
 def init_db() -> None:
