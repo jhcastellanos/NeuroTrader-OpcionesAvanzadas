@@ -1,8 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 
-from app.auth import get_current_user
 from app.data_provider import normalize_ticker
-from app.models import User
 
 from .explain import (
     compare_strategies,
@@ -25,7 +23,7 @@ def _normalize_body_ticker(ticker):
 
 
 @router.post("/covered-call")
-async def income_covered_call(body: CoveredCallRequest, _user: User = Depends(get_current_user)):
+async def income_covered_call(body: CoveredCallRequest):
     try:
         body.ticker = _normalize_body_ticker(body.ticker)
         return await evaluate_covered_call(body)
@@ -36,7 +34,7 @@ async def income_covered_call(body: CoveredCallRequest, _user: User = Depends(ge
 
 
 @router.post("/csp")
-async def income_csp(body: CashSecuredPutRequest, _user: User = Depends(get_current_user)):
+async def income_csp(body: CashSecuredPutRequest):
     try:
         body.ticker = _normalize_body_ticker(body.ticker)
         return await evaluate_csp(body)
@@ -47,7 +45,7 @@ async def income_csp(body: CashSecuredPutRequest, _user: User = Depends(get_curr
 
 
 @router.post("/compare")
-async def income_compare(body: CompareStrategiesRequest, _user: User = Depends(get_current_user)):
+async def income_compare(body: CompareStrategiesRequest):
     try:
         body.ticker = _normalize_body_ticker(body.ticker)
         return await compare_strategies(body)
@@ -58,7 +56,7 @@ async def income_compare(body: CompareStrategiesRequest, _user: User = Depends(g
 
 
 @router.post("/explain/covered-call")
-async def income_explain_cc(body: CoveredCallRequest, _user: User = Depends(get_current_user)):
+async def income_explain_cc(body: CoveredCallRequest):
     try:
         body.ticker = _normalize_body_ticker(body.ticker)
         return await explain_covered_call(body)
@@ -69,7 +67,7 @@ async def income_explain_cc(body: CoveredCallRequest, _user: User = Depends(get_
 
 
 @router.post("/explain/csp")
-async def income_explain_csp(body: CashSecuredPutRequest, _user: User = Depends(get_current_user)):
+async def income_explain_csp(body: CashSecuredPutRequest):
     try:
         body.ticker = _normalize_body_ticker(body.ticker)
         return await explain_csp(body)
@@ -80,7 +78,7 @@ async def income_explain_csp(body: CashSecuredPutRequest, _user: User = Depends(
 
 
 @router.get("/{ticker}")
-async def income_dashboard(ticker: str, _user: User = Depends(get_current_user)):
+async def income_dashboard(ticker: str):
     try:
         symbol = normalize_ticker(ticker)
         return await load_dashboard(symbol)

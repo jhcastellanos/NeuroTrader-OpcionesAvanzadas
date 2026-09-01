@@ -5,7 +5,6 @@ This build merges the strongest parts of the two versions:
 - **V3.1 QA:** real OHLCV backend, Polygon integration, validated ticker/timeframe input, institutional-level engine, automated tests.
 - **V4 Multi-Asset:** selectable ticker combobox (SNDK, NVDA, META, AVGO, MSFT, AAPL, AMD, TSLA, QQQ, SPY).
 - **V4.2:** Polygon.io live OHLCV by default. Demo bars stay available only if `DEMO_MODE=true`.
-- **Auth:** register/login against Neon Postgres. Passwords are hashed; sessions use an HTTP-only cookie.
 
 ## Run
 
@@ -16,13 +15,11 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Put your Polygon key and database URL in `.env`:
+Put your Polygon key in `.env`:
 
 ```
 POLYGON_API_KEY=your_key_here
 DEMO_MODE=false
-DATABASE_URL=postgresql://USER:PASSWORD@HOST/neondb?sslmode=require
-JWT_SECRET=change-me
 ```
 
 ```bash

@@ -1,10 +1,8 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query
 
-from app.auth import get_current_user
 from app.data_provider import normalize_ticker
-from app.models import User
 
 from .databento import get_option_chain_for_dte
 
@@ -16,7 +14,6 @@ router = APIRouter(prefix="/api/options", tags=["options"])
 async def option_chain(
     ticker: str,
     dte: int = Query(7, ge=0, le=3650),
-    _user: User = Depends(get_current_user),
 ):
     try:
         symbol = normalize_ticker(ticker)

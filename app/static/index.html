@@ -1,33 +1,10 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07111f"><title>NeuroTrader Institutional Levels V4.2</title>
 <style>
-:root{--bg:#07111f;--panel:#0d1828;--panel2:#101f33;--border:#26364a;--text:#f8fafc;--muted:#94a3b8;--gold:#d4af37;--green:#22c55e;--red:#ef4444}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.app{max-width:1320px;margin:auto;padding:18px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800}h1{margin:6px 0 4px;font-size:clamp(28px,6vw,42px)}.sub{color:var(--muted);font-size:14px}.controls{display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:8px;align-items:end;margin-top:14px}label{display:grid;gap:5px;color:var(--muted);font-size:11px;font-weight:800}input,select,button{min-height:44px;border-radius:12px;font-size:16px}input,select{width:100%;padding:8px 10px;border:1px solid var(--border);background:var(--panel);color:var(--text)}button{border:0;padding:8px 14px;background:var(--gold);color:#07111f;font-weight:900;cursor:pointer}.watch{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 10px}.watch button{min-height:36px;padding:6px 10px;background:var(--panel);color:#cbd5e1;border:1px solid var(--border);font-size:12px}.watch button.active{color:var(--gold);border-color:#8b732a;background:rgba(212,175,55,.08)}.status{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px}.pill{padding:7px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--border);font-size:11px;font-weight:800}.gold{color:var(--gold)}.green{color:#4ade80}.red{color:#f87171}.err{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#fecaca;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.kpi,.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px}.kpi{padding:12px}.kpi span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;margin-bottom:5px}.kpi strong{font-size:17px}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.75fr);gap:14px;margin-top:14px}.panel{padding:14px}.head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.head h3{margin:0;font-size:15px}.chart{min-height:390px;background:#091524;border:1px solid #1b2b40;border-radius:14px;overflow:hidden}.chart svg{display:block;width:100%;height:auto;min-height:390px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}.metric{padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.metric span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-bottom:4px}.metric strong{font-size:14px}.buy{margin-top:10px;padding:12px;border-radius:13px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25)}.buy b{color:#4ade80}.buy p{margin:5px 0 0;color:#cbd5e1;font-size:12px;line-height:1.45}.levels{display:grid;gap:8px}.level{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.n{font-weight:900}.range{font-weight:900;font-size:14px}.meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.35}.score{font-size:16px;font-weight:900}.meter{height:5px;background:#1c2a3d;border-radius:999px;overflow:hidden;margin-top:6px}.meter i{display:block;height:100%;background:var(--gold)}.ghost{background:transparent;color:var(--text);border:1px solid var(--border)!important;min-height:36px;padding:6px 12px;font-size:12px;font-weight:800}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.topbar .user{color:var(--muted);font-size:13px;font-weight:700}#workspace{display:none}#workspace.show{display:block}#gate{display:none;min-height:72vh;align-items:center;justify-content:center}#gate.show{display:flex}.auth{width:min(420px,100%);background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:14px 0}.tabs button{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}.tabs button.active{background:rgba(212,175,55,.12);color:var(--gold);border-color:#8b732a}.auth form{display:grid;gap:10px}.ok{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#bbf7d0;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)}.dash-tabs{display:flex;gap:8px;margin:14px 0 4px}.dash-tabs button{min-height:38px;padding:8px 14px;background:var(--panel);color:var(--muted);border:1px solid var(--border);font-size:13px}.dash-tabs button.active{color:var(--gold);border-color:#8b732a;background:rgba(212,175,55,.12)}#incomeView{display:none}#incomeView.show{display:block}#levelsView.hide{display:none}.income-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.contracts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.contract{padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.contract.best{border-color:#8b732a;background:rgba(212,175,55,.08)}.contract b{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}.note{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.45}.reasons{margin:8px 0 0;padding-left:18px;color:#cbd5e1;font-size:12px;line-height:1.45}@media(max-width:950px){.controls{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.app{padding:12px}.controls{grid-template-columns:1fr 1fr}.controls button{grid-column:1/-1}.kpis{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}.chart,.chart svg{min-height:330px}}
+:root{--bg:#07111f;--panel:#0d1828;--panel2:#101f33;--border:#26364a;--text:#f8fafc;--muted:#94a3b8;--gold:#d4af37;--green:#22c55e;--red:#ef4444}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.app{max-width:1320px;margin:auto;padding:18px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800}h1{margin:6px 0 4px;font-size:clamp(28px,6vw,42px)}.sub{color:var(--muted);font-size:14px}.controls{display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:8px;align-items:end;margin-top:14px}label{display:grid;gap:5px;color:var(--muted);font-size:11px;font-weight:800}input,select,button{min-height:44px;border-radius:12px;font-size:16px}input,select{width:100%;padding:8px 10px;border:1px solid var(--border);background:var(--panel);color:var(--text)}button{border:0;padding:8px 14px;background:var(--gold);color:#07111f;font-weight:900;cursor:pointer}.watch{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 10px}.watch button{min-height:36px;padding:6px 10px;background:var(--panel);color:#cbd5e1;border:1px solid var(--border);font-size:12px}.watch button.active{color:var(--gold);border-color:#8b732a;background:rgba(212,175,55,.08)}.status{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px}.pill{padding:7px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--border);font-size:11px;font-weight:800}.gold{color:var(--gold)}.green{color:#4ade80}.red{color:#f87171}.err{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#fecaca;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.kpi,.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px}.kpi{padding:12px}.kpi span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;margin-bottom:5px}.kpi strong{font-size:17px}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.75fr);gap:14px;margin-top:14px}.panel{padding:14px}.head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.head h3{margin:0;font-size:15px}.chart{min-height:390px;background:#091524;border:1px solid #1b2b40;border-radius:14px;overflow:hidden}.chart svg{display:block;width:100%;height:auto;min-height:390px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}.metric{padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.metric span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-bottom:4px}.metric strong{font-size:14px}.buy{margin-top:10px;padding:12px;border-radius:13px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25)}.buy b{color:#4ade80}.buy p{margin:5px 0 0;color:#cbd5e1;font-size:12px;line-height:1.45}.levels{display:grid;gap:8px}.level{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.n{font-weight:900}.range{font-weight:900;font-size:14px}.meta{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.35}.score{font-size:16px;font-weight:900}.meter{height:5px;background:#1c2a3d;border-radius:999px;overflow:hidden;margin-top:6px}.meter i{display:block;height:100%;background:var(--gold)}.ghost{background:transparent;color:var(--text);border:1px solid var(--border)!important;min-height:36px;padding:6px 12px;font-size:12px;font-weight:800}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.topbar .user{color:var(--muted);font-size:13px;font-weight:700}#workspace{display:block}.auth{width:min(420px,100%);background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:14px 0}.tabs button{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}.tabs button.active{background:rgba(212,175,55,.12);color:var(--gold);border-color:#8b732a}.auth form{display:grid;gap:10px}.ok{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;color:#bbf7d0;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)}.dash-tabs{display:flex;gap:8px;margin:14px 0 4px}.dash-tabs button{min-height:38px;padding:8px 14px;background:var(--panel);color:var(--muted);border:1px solid var(--border);font-size:13px}.dash-tabs button.active{color:var(--gold);border-color:#8b732a;background:rgba(212,175,55,.12)}#incomeView{display:none}#incomeView.show{display:block}#levelsView.hide{display:none}.income-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.contracts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.contract{padding:10px;background:var(--panel2);border:1px solid var(--border);border-radius:12px}.contract.best{border-color:#8b732a;background:rgba(212,175,55,.08)}.contract b{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}.note{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.45}.reasons{margin:8px 0 0;padding-left:18px;color:#cbd5e1;font-size:12px;line-height:1.45}@media(max-width:950px){.controls{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.app{padding:12px}.controls{grid-template-columns:1fr 1fr}.controls button{grid-column:1/-1}.kpis{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}.chart,.chart svg{min-height:330px}}
 #incomeView .eyebrow{color:var(--gold)}.income-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.income-stack{display:grid;gap:12px;margin-top:12px}.quote-price{display:flex;align-items:baseline;gap:12px;margin:8px 0 14px}.quote-price strong{font-size:32px}.quote-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;border-top:1px solid var(--border);padding-top:12px;margin-top:8px}.quote-metrics div span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;margin-bottom:4px}.scorebar{margin:8px 0}.scorebar .row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}.score-head{display:flex;align-items:center;gap:8px}.score-head strong{font-size:28px;color:var(--gold)}.income-filters{display:none;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}.income-filters select{min-height:36px;width:auto;font-size:12px}.income-table-wrap{max-height:320px;overflow:auto}.income-table-wrap.is-loading{opacity:.45}.income{width:100%;border-collapse:collapse;font-size:12px}.income th{text-align:left;color:var(--muted);font-weight:700;font-size:10px;text-transform:uppercase;padding:6px 8px;position:sticky;top:0;background:var(--panel)}.income td{padding:7px 8px;border-top:1px solid var(--border);white-space:nowrap}.income tr.sel{background:rgba(212,175,55,.08)}.income input[type=checkbox],.checkline input[type=checkbox]{width:16px;min-height:16px;height:16px}.strat-toggle{display:flex;gap:8px;margin-bottom:12px}.strat-toggle button{min-height:36px;background:var(--panel2);color:var(--muted);border:1px solid var(--border);font-size:12px}.strat-toggle button.active{background:var(--gold);color:#07111f}.field-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.checkline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;min-height:44px}.checkline input{width:auto}.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.split-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.payoff svg{display:block;width:100%;height:220px;background:#091524;border:1px solid #1b2b40;border-radius:12px}.metric-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}.metric-row strong{color:var(--text)}.strat-result{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}.details-link{cursor:pointer;color:var(--gold);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-top:10px}@media(max-width:950px){.income-top,.field-grid,.role-grid,.split-2{grid-template-columns:1fr}.quote-metrics{grid-template-columns:repeat(2,1fr)}}
 </style></head><body>
-<div id="gate">
-  <div class="auth">
-    <div class="eyebrow">NeuroTrader • Access</div>
-    <h1 style="font-size:28px">Entrar a Institutional Levels</h1>
-    <div class="sub">Crea una cuenta o inicia sesión para analizar con datos reales.</div>
-    <div class="tabs">
-      <button type="button" id="tabLogin" class="active">Login</button>
-      <button type="button" id="tabRegister">Register</button>
-    </div>
-    <div class="err" id="authErr"></div>
-    <p class="note" id="authStatus" style="margin:0 0 10px"></p>
-    <form id="loginForm">
-      <label>Email<input id="loginEmail" type="email" autocomplete="username" required></label>
-      <label>Contraseña<input id="loginPassword" type="password" autocomplete="current-password" minlength="8" required></label>
-      <button type="submit">Iniciar sesión</button>
-    </form>
-    <form id="registerForm" style="display:none">
-      <label>Email<input id="registerEmail" type="email" autocomplete="username" required></label>
-      <label>Contraseña<input id="registerPassword" type="password" autocomplete="new-password" minlength="8" required></label>
-      <button type="submit">Crear cuenta</button>
-    </form>
-  </div>
-</div>
 <div class="app" id="workspace">
-<div class="topbar"><div><div class="eyebrow">NeuroTrader • Institutional Engine</div></div><div style="display:flex;align-items:center;gap:10px"><span class="user" id="userEmail"></span><button type="button" class="ghost" id="logoutBtn">Salir</button></div></div>
+<div class="topbar"><div class="eyebrow">NeuroTrader • Institutional Engine</div></div>
 <div id="app"><h1>Institutional Levels™ V4.2</h1><div class="sub">Motor V3.1 QA + Premium Income. Histórico Polygon.io, cotización en vivo y análisis de Covered Call / CSP para cualquier ticker.</div>
 <form class="controls" id="form"><label>Ticker<input id="ticker" list="tickerList" placeholder="Seleccionar o escribir ticker" maxlength="15" autocomplete="off"><datalist id="tickerList"></datalist></label><label>Timeframe<select id="tf"><option value="day">Daily</option><option value="week">Weekly</option><option value="4h">4H</option><option value="1h">1H</option></select></label><label>Barras<select id="limit"><option>300</option><option selected>500</option><option>800</option><option>1200</option></select></label><button type="submit">Analizar</button></form>
 <div class="status"><span class="pill gold" id="source">● Cargando</span><span class="pill" id="last">—</span><span class="pill" id="bars">—</span><span class="pill green" id="breakout">Breakout Validation</span></div><div class="err" id="err"></div>
@@ -199,7 +176,6 @@ async function load(){
   try{
     var url='/api/levels/'+encodeURIComponent(symbol)+'?timeframe='+encodeURIComponent($('tf').value)+'&limit='+encodeURIComponent($('limit').value);
     var r=await fetch(url,{credentials:'same-origin'}), d=await r.json();
-    if(r.status===401){ showGate(); throw new Error('Sesión expirada. Inicia sesión de nuevo.'); }
     if(!r.ok) throw new Error(typeof d.detail==='string'?d.detail:'Analysis failed');
     lastTicker=d.ticker;
     $('source').textContent='● '+d.data_source;
@@ -262,90 +238,6 @@ $('form').addEventListener('submit',function(e){e.preventDefault();load()});
 $('ticker').addEventListener('change',function(){ if(selectedTicker()) load(); });
 $('tf').addEventListener('change',function(){ if(selectedTicker()) load(); });
 $('limit').addEventListener('change',function(){ if(selectedTicker()) load(); });
-function authDetail(d){
-  if(!d) return 'No se pudo completar la solicitud.';
-  if(typeof d.detail==='string') return d.detail;
-  if(Array.isArray(d.detail)&&d.detail[0]&&d.detail[0].msg) return d.detail[0].msg;
-  return 'No se pudo completar la solicitud.';
-}
-function showGate(){
-  $('gate').classList.add('show');
-  $('workspace').classList.remove('show');
-}
-window.addEventListener('nt-session-expired', function(){ showGate(); });
-function showApp(user){
-  $('gate').classList.remove('show');
-  $('workspace').classList.add('show');
-  $('userEmail').textContent=user.email;
-  ping();
-}
-function setAuthMode(mode){
-  var login=mode==='login';
-  $('tabLogin').className=login?'active':'';
-  $('tabRegister').className=login?'':'active';
-  $('loginForm').style.display=login?'grid':'none';
-  $('registerForm').style.display=login?'none':'grid';
-  $('authErr').style.display='none';
-}
-async function currentUser(){
-  var r=await fetch('/api/auth/me',{credentials:'same-origin'});
-  if(r.status===503){
-    var d=await r.json().catch(function(){return {};});
-    $('authErr').textContent=authDetail(d);
-    $('authErr').style.display='block';
-    return null;
-  }
-  if(!r.ok) return null;
-  return r.json();
-}
-function loadAuthHealth(){
-  fetch('/api/auth/health').then(function(r){ return r.json(); }).then(function(h){
-    var status=$('authStatus');
-    if(!h.jwt_configured){
-      $('authErr').textContent='Autenticación no configurada.';
-      $('authErr').style.display='block';
-      if(status) status.textContent='Falta JWT_SECRET en el servidor.';
-      return;
-    }
-    if(!h.database_configured || h.database_connected===false){
-      $('authErr').textContent='No fue posible conectar con la base de datos.';
-      $('authErr').style.display='block';
-      if(status) status.textContent='La base de datos no responde.';
-      return;
-    }
-    if(status) status.textContent='';
-  }).catch(function(){});
-}
-async function submitAuth(url,email,password){
-  $('authErr').style.display='none';
-  var r=await fetch(url,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    credentials:'same-origin',
-    body:JSON.stringify({email:email,password:password})
-  });
-  var d=await r.json().catch(function(){return {};});
-  if(!r.ok) throw new Error(authDetail(d));
-  showApp(d);
-}
-$('tabLogin').addEventListener('click',function(){ setAuthMode('login'); });
-$('tabRegister').addEventListener('click',function(){ setAuthMode('register'); });
-$('loginForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  submitAuth('/api/auth/login',$('loginEmail').value,$('loginPassword').value).catch(function(err){
-    $('authErr').textContent=err.message; $('authErr').style.display='block';
-  });
-});
-$('registerForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  submitAuth('/api/auth/register',$('registerEmail').value,$('registerPassword').value).catch(function(err){
-    $('authErr').textContent=err.message; $('authErr').style.display='block';
-  });
-});
-$('logoutBtn').addEventListener('click',async function(){
-  await fetch('/api/auth/logout',{method:'POST',credentials:'same-origin'});
-  showGate();
-});
-currentUser().then(function(user){ if(user) showApp(user); else { showGate(); loadAuthHealth(); } }).catch(function(){ showGate(); loadAuthHealth(); });
+ping();
 })();
 </script></body></html>

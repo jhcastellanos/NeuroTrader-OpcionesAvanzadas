@@ -88,10 +88,6 @@
   async function api(path, options) {
     var r = await fetch(path, Object.assign({ credentials: "same-origin" }, options || {}));
     var d = await r.json().catch(function () { return {}; });
-    if (r.status === 401) {
-      window.dispatchEvent(new CustomEvent("nt-session-expired"));
-      throw new Error("Sesión expirada. Inicia sesión de nuevo.");
-    }
     if (!r.ok) throw new Error(authDetail(d));
     return d;
   }

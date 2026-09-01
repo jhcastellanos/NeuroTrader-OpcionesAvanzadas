@@ -198,21 +198,9 @@ class DatabentoRouteTests(unittest.TestCase):
         databento._RANGE_CACHE.clear()
         self.client = TestClient(app)
 
-        def fake_user():
-            return type("U", (), {"id": 1, "email": "test@example.com"})()
-
-        from app.auth import get_current_user
-        app.dependency_overrides[get_current_user] = fake_user
-
     def tearDown(self):
-        app.dependency_overrides.clear()
         databento._DEFINITIONS_CACHE.clear()
         databento._RANGE_CACHE.clear()
-
-    def test_requires_auth(self):
-        app.dependency_overrides.clear()
-        r = self.client.get("/api/options/META?dte=7")
-        self.assertEqual(r.status_code, 401)
 
     def test_invalid_ticker(self):
         r = self.client.get("/api/options/META!?dte=7")
