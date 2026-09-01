@@ -8,7 +8,7 @@ from zoneinfo import ZoneInfo
 import httpx
 import pandas as pd
 
-from app.data_provider import fetch_polygon_ohlcv, normalize_ticker
+from app.data_provider import fetch_polygon_ohlcv, normalize_ticker, polygon_api_key
 
 from .demo_options import build_illustrative_chain
 from .schemas import (
@@ -150,7 +150,7 @@ def _parse_option_row(ticker: str, payload: dict, updated_at_ny: str) -> Optiona
 
 
 async def _polygon_get(client: httpx.AsyncClient, path: str, params: Optional[dict] = None) -> Optional[dict]:
-    api_key = os.getenv("POLYGON_API_KEY", "").strip()
+    api_key = polygon_api_key()
     if not api_key:
         return None
     request_params = dict(params or {})

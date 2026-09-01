@@ -9,7 +9,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy.pool import NullPool
 
-load_dotenv(override=True)
+load_dotenv(override=False)
 
 logger = logging.getLogger("neurotrader.db")
 

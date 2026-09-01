@@ -14,6 +14,15 @@ PUBLIC_QUOTE_HEADERS = {
     "Accept": "application/json,text/plain,*/*",
 }
 
+
+def polygon_api_key() -> str:
+    for name in ("POLYGON_API_KEY", "POLYGON_KEY"):
+        raw = os.getenv(name) or ""
+        key = raw.strip().strip('"').strip("'")
+        if key:
+            return key
+    return ""
+
 TF_MAP = {
     "minute": (1, "minute"),
     "5m": (5, "minute"),
@@ -415,7 +424,7 @@ def _polygon_error_message(status_code: int, payload: Optional[dict] = None) -> 
     return f"Polygon.io HTTP {status_code}."
 
 async def fetch_polygon_ohlcv(ticker: str, timeframe: str = "day", limit: int = 500) -> pd.DataFrame:
-    api_key = os.getenv("POLYGON_API_KEY", "").strip()
+    api_key = polygon_api_key()
     if not api_key:
         raise RuntimeError("POLYGON_API_KEY is not configured.")
 

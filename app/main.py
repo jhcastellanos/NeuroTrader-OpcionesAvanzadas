@@ -11,13 +11,13 @@ from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from sqlalchemy import text
 
-from .data_provider import fetch_polygon_ohlcv, normalize_ticker, normalize_timeframe
+from .data_provider import fetch_polygon_ohlcv, normalize_ticker, normalize_timeframe, polygon_api_key
 from .db import get_engine, init_db
 from .engine import calculate_levels
 from .income.options_routes import router as options_router
 from .income.routes import router as income_router
 
-load_dotenv(override=True)
+load_dotenv(override=False)
 logger = logging.getLogger("neurotrader")
 
 @asynccontextmanager
@@ -71,7 +71,17 @@ async def home():
     return FileResponse(index)
 
 def _polygon_configured() -> bool:
-    return bool(os.getenv("POLYGON_API_KEY", "").strip())
+    return bool(polygon_api_key())
+
+
+def _polygon_missing_message() -> str:
+    if (os.getenv("VERCEL") or "").strip() == "1":
+        return (
+            "POLYGON_API_KEY no está en este deploy de Vercel. "
+            "Añádela en Settings → Environment Variables del proyecto que sirve este dominio, "
+            "entorno Production, y vuelve a desplegar."
+        )
+    return "Configura POLYGON_API_KEY en .env para usar datos reales de Polygon.io."
 
 
 def _demo_enabled() -> bool:
@@ -123,9 +133,7 @@ async def levels(
             df = _demo_ohlcv(symbol, tf, limit)
             source = "Demo OHLCV"
         else:
-            raise RuntimeError(
-                "Configura POLYGON_API_KEY en .env para usar datos reales de Polygon.io."
-            )
+            raise RuntimeError(_polygon_missing_message())
 
         result = calculate_levels(df)
         live_meta = dict(df.attrs.get("live") or {})

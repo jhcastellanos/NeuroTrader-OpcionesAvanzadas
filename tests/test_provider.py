@@ -25,6 +25,12 @@ class ProviderValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             normalize_timeframe("2day")
 
+    def test_polygon_api_key_strips_quotes(self):
+        from unittest.mock import patch
+        from app.data_provider import polygon_api_key
+        with patch.dict("os.environ", {"POLYGON_API_KEY": ' "abc123" '}, clear=False):
+            self.assertEqual(polygon_api_key(), "abc123")
+
     def test_lookback_start_is_before_today(self):
         start = lookback_start("day", 500)
         self.assertRegex(start, r"^\d{4}-\d{2}-\d{2}$")
